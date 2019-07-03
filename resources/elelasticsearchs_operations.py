@@ -8,17 +8,17 @@ class ConstructTree(Resource):
 		
 class DeleteDocument(Resource):
 	parser = reqparse.RequestParser()
-	parser.add_argument('Name',
-						type=str,
+	parser.add_argument('Id',
+						type=int,
 						required=True,
 						help="This field cannot be blank."
 						)
 	def post(self):
 		data = UserRegister.parser.parse_args()
 		elelastic_operation = ElelasticSearchs_Operations()
-		return elelastic_operation.delete_document(data['Name'])
+		return elelastic_operation.delete_document(data['Id'])
 		
 class SelectDocument(Resource):
-	def get(self, Name):
+	def get(self, Id):
 		elelastic_operation = ElelasticSearchs_Operations()
-		return elelastic_operation.retrieving_document(Name)
+		return elelastic_operation.retrieving_document(Id)

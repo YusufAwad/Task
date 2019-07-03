@@ -9,6 +9,8 @@ from resources.hotel_tone_analyzer import GetToneAnalyzer
 from resources.elelasticsearchs_operations import ConstructTree
 from resources.elelasticsearchs_operations import DeleteDocument
 from resources.elelasticsearchs_operations import SelectDocument
+from resources.elelasticsearchs_operations import SelectDocument
+from resources.hotel_mapper import GetHotelId
 
 
 
@@ -22,7 +24,8 @@ api = Api(app)
 api.add_resource(GetToneAnalyzer, '/GetToneAnalyzer/<string:Name>')
 api.add_resource(ConstructTree, '/ConstructTree')
 api.add_resource(DeleteDocument, '/DeleteDocument')
-api.add_resource(SelectDocument, '/SelectDocument/<string:Name>')
+api.add_resource(SelectDocument, '/SelectDocument/<int:Id>')
+
 
 
 if __name__ == '__main__':

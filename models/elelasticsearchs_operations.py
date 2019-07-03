@@ -3,7 +3,6 @@ import numpy as np
 import json
 import requests
 from hotel_tone_analyzer import Hotel_Tone_Analyzer
-from hotel_mapper import Hotel_Mapper
 from elasticsearch import Elasticsearch
 
 class ElelasticSearchs_Operations:
@@ -29,7 +28,6 @@ class ElelasticSearchs_Operations:
 		self.hotel_dataframe.drop(['reviews.date', 'reviews.dateAdded', 'reviews.rating', 'reviews.rating', 'reviews.title', 'reviews.username', 'reviews.text'], axis = 1, inplace = True)
 		self.dic_hotel = self.hotel_dataframe.to_dict(orient='records')
 		
-		self.hotel_map = Hotel_Mapper()
 		
 		
 	def construct_tree(self):
@@ -48,7 +46,6 @@ class ElelasticSearchs_Operations:
 		self.es.indices.create("hotelcrop")
 		res = requests.put(url, json=data, headers=headers)
 		i = 0
-		self.hotel_map.creat_db()
 		
 		for row in self.dic_hotel:
 			data = self.group_name.get_group(row['name'])
@@ -61,7 +58,6 @@ class ElelasticSearchs_Operations:
 			row['tone analyzer'] = tone_analyzer.get_tone_analyzer(row['name'])
 			try:
 				res = self.es.index(index='hotelcrop',doc_type='hotel',id=j,body=row)
-				self.hotel_map.set_hotel(i,row['name'])
 				i = i + 1
 			except:
 #				print("error!, skiping chunk!")
@@ -70,24 +66,18 @@ class ElelasticSearchs_Operations:
 		return {"Sucess": "Tree Constructed"}
 			
 			
-	def retrieving_document(self, Name):
+	def retrieving_document(self, Id):
 		try:
-			select_hotel = self.hotel_map.get_hotel(Name)
-			i = str(select_hotel[0])
-			i = int(i)
-			res = self.es.get(index='hotelcrop', doc_type = 'hotel', id = (i*1))
+			res = self.es.get(index='hotelcrop', doc_type = 'hotel', id = Id)
 			return res
 		
 		except:
 			return {"Error": "Name Not Found"}, 404
 			
 	
-	def delete_document(self, Name):
+	def delete_document(self, Id):
 		try:
-			delete_hotel = self.hotel_map.get_hotel(Name)
-			i = str(delete_hotel[0])
-			i = int(i)
-			res = self.es.delete(index='hotelcrop', doc_type = 'hotel', id = (i*1))
+			res = self.es.delete(index='hotelcrop', doc_type = 'hotel', id = Id)
 			return res
 			
 		except:
