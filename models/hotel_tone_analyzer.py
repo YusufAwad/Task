@@ -37,6 +37,7 @@ class Hotel_Tone_Analyzer:
 
 			
 		# Sending the reviews to tone analyzer and returned in a form of JSON
+		# Checking if the review exceede the tone analyzer limit. From what I found its limit is 128 kb and only about five hotel that its reviews exceeds the limit
 		try:
 			tone_analysis = self.tone_analyzer.tone(
 				{'text': text},
