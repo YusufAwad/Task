@@ -14,6 +14,19 @@ class ElelasticSearchs_Operations:
 		self.hotel_dataframe = self.hotel_dataframe[self.hotel_dataframe['categories']=='Hotels']
 		# Dropping the Null Cloumns as I found all of its value are equal to null form kaggle
 		self.hotel_dataframe.drop(['reviews.doRecommend', 'reviews.id', 'reviews.userCity', 'reviews.userProvince'], axis = 1, inplace = True)
+
+		
+		# Alternative Datacleaing that keep the number of record as it is
+						
+#		self.hotel_dataframe['reviews.date'].fillna( method ='ffill', inplace = True)
+#		self.hotel_dataframe['reviews.dateAdded'].fillna( method ='ffill', inplace = True)
+#		self.hotel_dataframe['latitude'].fillna((self.hotel_dataframe['latitude'].mean()), inplace=True)
+#		self.hotel_dataframe['longitude'].fillna( (self.hotel_dataframe['longitude'].mean()), inplace = True)
+#		self.hotel_dataframe['postalCode'].fillna( method ='ffill', inplace = True)
+#		self.hotel_dataframe['reviews.rating'].fillna( method ='ffill', inplace = True)
+#		self.hotel_dataframe.dropna(inplace = True)
+		
+		
 		# Drop any record that has null value
 		self.hotel_dataframe.dropna(inplace = True)
 		
