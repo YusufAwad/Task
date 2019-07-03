@@ -33,6 +33,9 @@ class Hotel_Tone_Analyzer:
 			review = review.replace(",", "")
 			review = review.replace("-", "")
 			review = review.replace("!", "")
+			# As the limit of Watson Toner is 128kb
+			if(sys.getsizeof(text + review) > 128000):
+				break
 			text = text + review + '\n'
 
 			
