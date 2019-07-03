@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from ibm_watson import ToneAnalyzerV3
+import sys
 
 class Hotel_Tone_Analyzer:
 	
